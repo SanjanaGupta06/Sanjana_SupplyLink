@@ -17,6 +17,7 @@
                                     required.</small>
                                 <small *ngIf="userForm.get('username')?.hasError('specialCharacters')">Username cannot
                                     contain special characters.</small>
+                                    <small *ngIf="userForm.get('username')?.hasError('usernameExists')">Username already exists.</small>
                             </div>
                         </div>
 

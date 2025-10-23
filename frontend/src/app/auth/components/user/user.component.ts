@@ -50,11 +50,19 @@ export class UserComponent implements OnInit {
                 next: (response) => {
                     this.successMessage = "User created successfully";
                     this.userForm.reset();
+                    setTimeout(()=>{
+                        this.successMessage = "";
+                    },2000)
                     this.errorMessage = "";
                 },
                 error: (error: HttpErrorResponse) => {
                     console.log(error);
+                    if(error.status === 409 && error.error === "Username already exists"){
+                        this.successMessage = "";
+                        this.errorMessage = "Username already exists";
+                    }else{
                     this.errorMessage = error.error ?? "Please fill the form correctly";
+                    }
                 }
                 });
         } else {
