@@ -28,7 +28,7 @@ export class SupplierComponent implements OnInit {
       phone: ["" , [Validators.required , Validators.pattern(/^\d{10}$/)]],
       address: [""],
       username: ["", [Validators.required, this.noSpecialCharacters]],
-      password: ["", [Validators.required, Validators.minLength(8)]],
+      password: ["", [Validators.required, Validators.minLength(8) , this.strongPasswordValidator]],
       role: ["", [Validators.required]]
     });
   }
@@ -37,6 +37,15 @@ export class SupplierComponent implements OnInit {
     const SPECIAL_CHARACTERS_REGEX = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/;
     if (SPECIAL_CHARACTERS_REGEX.test(control.value)) {
       return { specialCharacters: true };
+    }
+    return null;
+  }
+
+  private strongPasswordValidator(control: any): { [key: string]: boolean } | null {
+    const value = control.value;
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    if (!strongPasswordRegex.test(value)) {
+      return { weakPassword: true };
     }
     return null;
   }
